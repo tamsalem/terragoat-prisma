@@ -55,3 +55,14 @@ statement {
     sid = "__default_statement_ID"	
   }
 }
+
+resource "aws_sns_topic" "t_sns_topic" {
+  name = "test-alerts-sns"
+  tags = local.default_tags
+}
+
+resource "aws_sns_topic_subscription" "t_alerts_sub" {
+  topic_arn = aws_sns_topic.t_sns_topic.arn
+  protocol  = "email"
+  endpoint  = var.endpoint
+}
